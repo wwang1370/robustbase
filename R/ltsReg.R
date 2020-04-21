@@ -24,6 +24,8 @@
 
 ltsReg <- function(x, ...) UseMethod("ltsReg")
 
+
+
 ltsReg.formula <- function(formula, data, subset, weights, na.action,
 			   model = TRUE, x.ret = FALSE, y.ret = FALSE,
                            contrasts = NULL, offset, ...)
@@ -371,15 +373,22 @@ ltsReg.default <- function (x, y, intercept = TRUE,
 	    if(z$objfct < 0)
 		stop("no valid subsample found in LTS - set 'nsamp' or rather use lmrob.S()")
 	    ## vt:: lm.fit.qr == lm.fit(...,method=qr,...)
-	    cf <- lm.fit(x[z$inbest, , drop = FALSE], y[z$inbest])$coef
+	    tls.func <- function(x,y){
+	      x <- as.matrix(a, )
+	      z <- cbind(x, y)
+	      v <- svd(z)$v
+	      vxy <- v[1:ncol(x), (1+ncol(x)):ncol(v)]
+	      vyy <- v[(1+ncol(x)):ncol(v),(1+ncol(x)):ncol(v)]
+	      -vxy %*% solve(vyy)
+	      
+	    }
+	    cf <- tls(x[z$inbest, , drop = FALSE],y[z$inbest])
 	    if(any(ic <- is.na(cf)))
 		stop(gettextf("NA coefficient (at %s) from \"best\" subset",
 			      paste(which(ic), collapse =",")))
-	   print(cf)
-	   class(cf)
 	    ans$best <- sort(z$inbest)
 	    fitted <- x %*% cf
-	    resid <- y - fitted
+	    resid <- (fitted-y)/sqrt(cf[,1]^2+1) 
 	    piv <- 1:p
 	    coefs[piv] <- cf ## FIXME? why construct 'coefs' so complicatedly?	use 'cf' !
 
