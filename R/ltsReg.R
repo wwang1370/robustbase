@@ -388,7 +388,7 @@ ltsReg.default <- function (x, y, intercept = TRUE,
 			      paste(which(ic), collapse =",")))
 	    ans$best <- sort(z$inbest)
 	    fitted <- x %*% cf
-	    resid <- (fitted-y)/sqrt(cf[,1]^2+1) 
+	    resid <- (fitted-y)/sqrt(cf[1,]^2+1) 
 	    piv <- 1:p
 	    coefs[piv] <- cf ## FIXME? why construct 'coefs' so complicatedly?	use 'cf' !
 
