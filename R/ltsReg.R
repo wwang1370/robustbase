@@ -371,17 +371,15 @@ ltsReg.default <- function (x, y, intercept = TRUE,
 	    if(z$objfct < 0)
 		stop("no valid subsample found in LTS - set 'nsamp' or rather use lmrob.S()")
 	    ## vt:: lm.fit.qr == lm.fit(...,method=qr,...)
-	    cf <- (sum(y[z$inbest] ^ 2 - x[z$inbest, , drop = FALSE] ^ 2) + sqrt((sum(x[z$inbest, , drop = FALSE] ^ 2 - y[z$inbest] ^ 2)) ^ 2 + 4 * (sum(x[z$inbest, , drop = FALSE] * y[z$inbest])) ^ 2)) / (2 * sum(x[z$inbest, , drop = FALSE] * y[z$inbest]))
+	    cf <- lm.fit(x[z$inbest, , drop = FALSE], y[z$inbest])$coef
 	    if(any(ic <- is.na(cf)))
 		stop(gettextf("NA coefficient (at %s) from \"best\" subset",
 			      paste(which(ic), collapse =",")))
-	    ans$best <- sort(z$inbest)
-	   print(dim(x))
-	  print(class(x))
 	   print(cf)
-	   print(class(cf))
+	   class(cf)
+	    ans$best <- sort(z$inbest)
 	    fitted <- x %*% cf
-	    resid <- (fitted-y)/sqrt(cf^2+1) 
+	    resid <- y - fitted
 	    piv <- 1:p
 	    coefs[piv] <- cf ## FIXME? why construct 'coefs' so complicatedly?	use 'cf' !
 
