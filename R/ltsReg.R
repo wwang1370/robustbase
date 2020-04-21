@@ -376,8 +376,8 @@ ltsReg.default <- function (x, y, intercept = TRUE,
 		stop(gettextf("NA coefficient (at %s) from \"best\" subset",
 			      paste(which(ic), collapse =",")))
 	    ans$best <- sort(z$inbest)
-	   dim(x)
-	  class(x)
+	   print(dim(x))
+	  print(class(x))
 	   print(cf)
 	   print(class(cf))
 	    fitted <- x %*% cf
