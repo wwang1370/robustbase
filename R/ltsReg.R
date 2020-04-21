@@ -376,7 +376,10 @@ ltsReg.default <- function (x, y, intercept = TRUE,
 		stop(gettextf("NA coefficient (at %s) from \"best\" subset",
 			      paste(which(ic), collapse =",")))
 	    ans$best <- sort(z$inbest)
-	    print(c(x,cf))
+	   print(x)
+	   class(x)
+	   print(cf)
+	   class(cf)
 	    fitted <- x %*% cf
 	    resid <- (fitted-y)/sqrt(cf^2+1) 
 	    piv <- 1:p
