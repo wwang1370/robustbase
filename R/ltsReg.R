@@ -377,9 +377,9 @@ ltsReg.default <- function (x, y, intercept = TRUE,
 			      paste(which(ic), collapse =",")))
 	    ans$best <- sort(z$inbest)
 	   print(x)
-	   class(x)
+	  print(class(x))
 	   print(cf)
-	   class(cf)
+	   print(class(cf))
 	    fitted <- x %*% cf
 	    resid <- (fitted-y)/sqrt(cf^2+1) 
 	    piv <- 1:p
