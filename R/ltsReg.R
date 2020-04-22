@@ -383,7 +383,7 @@ ltsReg.default <- function (x, y, intercept = TRUE,
 	    ## vt:: lm.fit.qr == lm.fit(...,method=qr,...)
 
 	    cf <- tls.func(x[z$inbest, , drop = FALSE], y[z$inbest])
-	    print(cf)
+	 
 	    if(any(ic <- is.na(cf)))
 		stop(gettextf("NA coefficient (at %s) from \"best\" subset",
 			      paste(which(ic), collapse =",")))
