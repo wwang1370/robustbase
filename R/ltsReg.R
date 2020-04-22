@@ -89,6 +89,14 @@ ltsReg.formula <- function(formula, data, subset, weights, na.action,
     fit
 }
 
+tls.func <- function(x,y){
+  z <- cbind(x, y)
+  v <- svd(z)$v
+  vxy <- v[1:ncol(x), (1+ncol(x)):ncol(v)]
+  vyy <- v[(1+ncol(x)):ncol(v),(1+ncol(x)):ncol(v)]
+  return(-vxy %*% solve(vyy))
+  
+}
 ltsReg.default <- function (x, y, intercept = TRUE,
         alpha = control$ alpha,
         nsamp = control$ nsamp,
@@ -373,14 +381,7 @@ ltsReg.default <- function (x, y, intercept = TRUE,
 	    if(z$objfct < 0)
 		stop("no valid subsample found in LTS - set 'nsamp' or rather use lmrob.S()")
 	    ## vt:: lm.fit.qr == lm.fit(...,method=qr,...)
-	    tls.func <- function(x,y){
-	      z <- cbind(x, y)
-	      v <- svd(z)$v
-	      vxy <- v[1:ncol(x), (1+ncol(x)):ncol(v)]
-	      vyy <- v[(1+ncol(x)):ncol(v),(1+ncol(x)):ncol(v)]
-	      return(-vxy %*% solve(vyy))
-	      
-	    }
+
 	    cf <- tls.func(x[z$inbest, , drop = FALSE], y[z$inbest])
 	    if(any(ic <- is.na(cf)))
 		stop(gettextf("NA coefficient (at %s) from \"best\" subset",
