@@ -374,7 +374,6 @@ ltsReg.default <- function (x, y, intercept = TRUE,
 		stop("no valid subsample found in LTS - set 'nsamp' or rather use lmrob.S()")
 	    ## vt:: lm.fit.qr == lm.fit(...,method=qr,...)
 	    tls.func <- function(x,y){
-	      x <- as.matrix(a, )
 	      z <- cbind(x, y)
 	      v <- svd(z)$v
 	      vxy <- v[1:ncol(x), (1+ncol(x)):ncol(v)]
