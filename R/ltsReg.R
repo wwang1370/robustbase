@@ -379,7 +379,7 @@ ltsReg.default <- function (x, y, intercept = TRUE,
 	      v <- svd(z)$v
 	      vxy <- v[1:ncol(x), (1+ncol(x)):ncol(v)]
 	      vyy <- v[(1+ncol(x)):ncol(v),(1+ncol(x)):ncol(v)]
-	      -vxy %*% solve(vyy)
+	      return(-vxy %*% solve(vyy))
 	      
 	    }
 	    cf <- tls.func(x[z$inbest, , drop = FALSE], y[z$inbest])
