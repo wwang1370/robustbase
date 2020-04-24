@@ -419,7 +419,7 @@ ltsReg.default <- function (x, y, intercept = TRUE,
 
 		## old, suboptimal: z1 <- lsfit(x, y, wt = weights, intercept = FALSE)
 		z1 <- lm.wfit(x, y, w = weights)
-
+  print(z1)
 		ans$coefficients <- getCoef(z1$coef)
 
 		fitted <- x %*% z1$coef
